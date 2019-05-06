@@ -7,18 +7,33 @@ import { muscles, storeExercises } from "./store";
 
 export default function App() {
   const [exercises, setExercises] = useState(storeExercises);
+  const [category, setCategory] = useState();
+  const [exercise, setExercise] = useState({});
 
-  const getExercisesByMuscle = muscle => {
-    return exercises.filter(exercise => {
-      return exercise === muscle;
-    });
+  const getExercisesByMuscle = () => {
+    return Object.entries(
+      exercises.reduce((acc, exercise) => {
+        const { muscles } = exercise;
+        acc[muscles] = acc[muscles] ? [...acc[muscles], exercise] : [exercise];
+        return acc;
+      }, {})
+    );
   };
+
+  const onSelectExercise = id =>
+    setExercise(exercises.find(ex => ex.id === id));
+
   return (
     <>
       <CssBaseline />
       <Header />
-      <Exersizes />
-      <Footer muscles={muscles} />
+      <Exersizes
+        exercise={exercise}
+        exercises={getExercisesByMuscle()}
+        category={category}
+        onSelect={onSelectExercise}
+      />
+      <Footer muscles={muscles} category={category} onSelect={setCategory} />
     </>
   );
 }
