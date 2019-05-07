@@ -26,7 +26,7 @@ export default function App() {
   return (
     <>
       <CssBaseline />
-      <Header />
+      <Header muscles={muscles} />
       <Exersizes
         exercise={exercise}
         exercises={getExercisesByMuscle()}

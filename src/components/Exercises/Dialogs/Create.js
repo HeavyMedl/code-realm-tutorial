@@ -7,12 +7,23 @@ import {
   DialogTitle,
   Button,
   Fab,
-  TextField
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  withStyles
 } from "@material-ui/core";
 
 import { Add } from "@material-ui/icons";
 
-export default props => {
+const styles = theme => ({
+  FormControl: {
+    width: 500
+  }
+});
+
+export default withStyles(styles)(({ muscles, classes }) => {
   const [open, setOpen] = useState(false);
   const [dialogForm, setDialogForm] = useState({
     title: "",
@@ -27,6 +38,8 @@ export default props => {
     });
   };
 
+  const handleSubmit = () => {};
+
   return (
     <>
       <Fab aria-label="Add" size="small" onClick={() => setOpen(!open)}>
@@ -38,21 +51,45 @@ export default props => {
           <DialogContentText>Please fill out the form below.</DialogContentText>
           <form>
             <TextField
-              id="standard-name"
-              label="Name"
+              label="Title"
               name="title"
               value={dialogForm.title}
               onChange={handleChange}
               margin="normal"
+              className={classes.FormControl}
+            />
+            <br />
+            <FormControl className={classes.FormControl}>
+              <InputLabel htmlFor="muscles">Muscles</InputLabel>
+              <Select
+                value={dialogForm.muscles}
+                name="muscles"
+                onChange={handleChange}
+              >
+                {muscles.map(muscle => (
+                  <MenuItem value={muscle}>{muscle}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <br />
+            <TextField
+              label="Description"
+              name="description"
+              multiline
+              rows="4"
+              value={dialogForm.description}
+              onChange={handleChange}
+              margin="normal"
+              className={classes.FormControl}
             />
           </form>
         </DialogContent>
         <DialogActions>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={handleSubmit}>
             Create
           </Button>
         </DialogActions>
       </Dialog>
     </>
   );
-};
+});
