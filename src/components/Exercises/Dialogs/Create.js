@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogActions,
@@ -13,9 +13,9 @@ import {
   Select,
   MenuItem,
   withStyles
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import { Add } from "@material-ui/icons";
+import { Add } from '@material-ui/icons';
 
 const styles = theme => ({
   FormControl: {
@@ -23,12 +23,12 @@ const styles = theme => ({
   }
 });
 
-export default withStyles(styles)(({ muscles, classes }) => {
+export default withStyles(styles)(({ muscles, onCreate, classes }) => {
   const [open, setOpen] = useState(false);
   const [dialogForm, setDialogForm] = useState({
-    title: "",
-    description: "",
-    muscles: ""
+    title: '',
+    description: '',
+    muscles: ''
   });
 
   const handleChange = ({ target: { name, value } }) => {
@@ -38,7 +38,18 @@ export default withStyles(styles)(({ muscles, classes }) => {
     });
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    onCreate({
+      ...dialogForm,
+      id: dialogForm.title.toLocaleLowerCase().replace(/ /g, '-')
+    });
+    setOpen(!open);
+    setDialogForm({
+      title: '',
+      description: '',
+      muscles: ''
+    });
+  };
 
   return (
     <>
@@ -67,7 +78,9 @@ export default withStyles(styles)(({ muscles, classes }) => {
                 onChange={handleChange}
               >
                 {muscles.map(muscle => (
-                  <MenuItem value={muscle}>{muscle}</MenuItem>
+                  <MenuItem key={muscle} value={muscle}>
+                    {muscle}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import Header from "./components/Layouts/Header";
-import Footer from "./components/Layouts/Footer";
-import Exersizes from "./components/Exercises";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { muscles, storeExercises } from "./store";
+import React, { useState } from 'react';
+import Header from './components/Layouts/Header';
+import Footer from './components/Layouts/Footer';
+import Exersizes from './components/Exercises';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { muscles, storeExercises } from './store';
 
 export default function App() {
   const [exercises, setExercises] = useState(storeExercises);
@@ -23,10 +23,13 @@ export default function App() {
   const onSelectExercise = id =>
     setExercise(exercises.find(ex => ex.id === id));
 
+  const onCreateExercise = newExercise =>
+    setExercises(exercises.concat(newExercise));
+
   return (
     <>
       <CssBaseline />
-      <Header muscles={muscles} />
+      <Header muscles={muscles} onCreate={onCreateExercise} />
       <Exersizes
         exercise={exercise}
         exercises={getExercisesByMuscle()}
