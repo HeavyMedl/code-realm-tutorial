@@ -11,12 +11,20 @@ export default function App() {
   const [exercise, setExercise] = useState({});
 
   const getExercisesByMuscle = () => {
+    const initialExercises = muscles.reduce(
+      (acc, muscle) => ({
+        ...acc,
+        [muscle]: []
+      }),
+      {}
+    );
     return Object.entries(
       exercises.reduce((acc, exercise) => {
+        console.log(acc);
         const { muscles } = exercise;
-        acc[muscles] = acc[muscles] ? [...acc[muscles], exercise] : [exercise];
+        acc[muscles] = [...acc[muscles], exercise];
         return acc;
-      }, {})
+      }, initialExercises)
     );
   };
 
@@ -25,6 +33,10 @@ export default function App() {
 
   const onCreateExercise = newExercise =>
     setExercises(exercises.concat(newExercise));
+
+  const onDeleteExercise = id => {
+    setExercises(exercises.filter(exercise => exercise.id !== id));
+  };
 
   return (
     <>
@@ -35,6 +47,7 @@ export default function App() {
         exercises={getExercisesByMuscle()}
         category={category}
         onSelect={onSelectExercise}
+        onDelete={onDeleteExercise}
       />
       <Footer muscles={muscles} category={category} onSelect={setCategory} />
     </>
