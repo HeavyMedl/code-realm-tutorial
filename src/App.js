@@ -19,11 +19,10 @@ export default function App() {
       {}
     );
     return Object.entries(
-      exercises.reduce((acc, exercise) => {
-        console.log(acc);
+      exercises.reduce((obj, exercise) => {
         const { muscles } = exercise;
-        acc[muscles] = [...acc[muscles], exercise];
-        return acc;
+        obj[muscles] = [...obj[muscles], exercise];
+        return obj;
       }, initialExercises)
     );
   };
