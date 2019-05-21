@@ -9,6 +9,7 @@ export default function App() {
   const [exercises, setExercises] = useState(storeExercises);
   const [category, setCategory] = useState();
   const [exercise, setExercise] = useState({});
+  const [editMode, setEditMode] = useState(false);
 
   const getExercisesByMuscle = () => {
     const initialExercises = muscles.reduce(
@@ -27,14 +28,27 @@ export default function App() {
     );
   };
 
-  const onSelectExercise = id =>
+  const onSelectExercise = id => {
     setExercise(exercises.find(ex => ex.id === id));
+    setEditMode(false);
+  };
 
   const onCreateExercise = newExercise =>
     setExercises(exercises.concat(newExercise));
 
   const onDeleteExercise = id => {
     setExercises(exercises.filter(exercise => exercise.id !== id));
+    setExercise({});
+  };
+
+  const onEditExercise = id => {
+    setExercise(exercises.find(ex => ex.id === id));
+    setEditMode(true);
+  };
+
+  const onExerciseUpdate = exercise => {
+    setExercises([...exercises.filter(ex => exercise.id !== ex.id), exercise]);
+    setExercise(exercise);
   };
 
   return (
@@ -47,6 +61,10 @@ export default function App() {
         category={category}
         onSelect={onSelectExercise}
         onDelete={onDeleteExercise}
+        onEdit={onEditExercise}
+        onUpdate={onExerciseUpdate}
+        editMode={editMode}
+        muscles={muscles}
       />
       <Footer muscles={muscles} category={category} onSelect={setCategory} />
     </>
