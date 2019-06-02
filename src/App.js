@@ -38,8 +38,8 @@ export default function App() {
 
   const onDeleteExercise = id => {
     setExercises(exercises.filter(exercise => exercise.id !== id));
-    setEditMode(false);
-    setExercise({});
+    setEditMode(exercise.id === id ? false : editMode);
+    setExercise(exercise.id === id ? {} : exercise);
   };
 
   const onEditExercise = id => {
