@@ -1,13 +1,14 @@
-import React from "react";
-import { Paper, Tabs, Tab } from "@material-ui/core";
+import React from 'react';
+import { Paper, Tabs, Tab } from '@material-ui/core';
+import withWidth from '@material-ui/core/withWidth';
 
-export default ({ muscles, category, onSelect }) => {
+export default withWidth()(({ muscles, category, onSelect, width }) => {
   const index = category
     ? muscles.findIndex(muscle => muscle === category) + 1
     : 0;
 
   const onIndexSelect = (e, index) => {
-    onSelect(index === 0 ? "" : muscles[index - 1]);
+    onSelect(index === 0 ? '' : muscles[index - 1]);
   };
 
   return (
@@ -15,9 +16,10 @@ export default ({ muscles, category, onSelect }) => {
       <Tabs
         indicatorColor="primary"
         textColor="primary"
-        centered
+        centered={width !== 'xs'}
         value={index}
         onChange={onIndexSelect}
+        scrollable={width === 'xs'}
       >
         <Tab label="All" />
         {muscles.map(group => (
@@ -26,4 +28,4 @@ export default ({ muscles, category, onSelect }) => {
       </Tabs>
     </Paper>
   );
-};
+});

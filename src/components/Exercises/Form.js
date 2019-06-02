@@ -12,7 +12,7 @@ import {
 
 const styles = theme => ({
   FormControl: {
-    width: 500
+    width: 250
   }
 });
 
