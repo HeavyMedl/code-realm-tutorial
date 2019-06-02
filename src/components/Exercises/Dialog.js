@@ -19,7 +19,12 @@ export default ({ muscles, onCreate }) => {
 
   return (
     <>
-      <Fab aria-label="Add" size="small" onClick={() => setOpen(!open)}>
+      <Fab
+        color="secondary"
+        aria-label="Add"
+        size="small"
+        onClick={() => setOpen(!open)}
+      >
         <Add />
       </Fab>
       <Dialog
