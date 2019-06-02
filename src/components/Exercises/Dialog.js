@@ -22,7 +22,12 @@ export default ({ muscles, onCreate }) => {
       <Fab aria-label="Add" size="small" onClick={() => setOpen(!open)}>
         <Add />
       </Fab>
-      <Dialog open={open} onClose={() => setOpen(!open)}>
+      <Dialog
+        fullWidth
+        maxWidth="xs"
+        open={open}
+        onClose={() => setOpen(!open)}
+      >
         <DialogTitle>Create a New Exercise</DialogTitle>
         <DialogContent>
           <DialogContentText>Please fill out the form below.</DialogContentText>

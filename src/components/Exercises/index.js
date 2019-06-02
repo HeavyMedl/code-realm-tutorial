@@ -35,6 +35,7 @@ export default withStyles(styles)(
     editMode,
     exercise,
     exercise: {
+      id,
       title = 'Welcome!',
       description = 'Please select an exercise from the list on the left'
     }
@@ -73,15 +74,18 @@ export default withStyles(styles)(
       </Grid>
       <Grid item xs={12} sm={6}>
         <Paper className={classes.Paper}>
+          <Typography variant="display1" gutterBottom>
+            {title}
+          </Typography>
           {editMode ? (
-            <Form exercise={exercise} muscles={muscles} onSubmit={onUpdate} />
+            <Form
+              key={id}
+              exercise={exercise}
+              muscles={muscles}
+              onSubmit={onUpdate}
+            />
           ) : (
-            <>
-              <Typography variant="display1">{title}</Typography>
-              <Typography variant="subheading" style={{ marginTop: 20 }}>
-                {description}
-              </Typography>
-            </>
+            <Typography variant="subheading">{description}</Typography>
           )}
         </Paper>
       </Grid>
